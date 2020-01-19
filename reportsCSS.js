@@ -35,12 +35,11 @@ let dashboardStyle = () => {
     return removeCSS;
 }
 
-let dataTable = (tga) => {
-    return `    
-        {
-            position:absolute !important;
-            width:95% !important;'
-        }`
+let verifyDataTable = () => {
+    return {
+        position: 'absolute !important',
+        width: '95% !important'
+    };
 }
 
 let chartHeightWidth = () => {
@@ -51,15 +50,13 @@ let chartHeightWidth = () => {
         padding: '0px 10px'
     };
 }
-
-
 let templateHeaderFooter = () => {
     let titleClassW = '111111111';
     let Title = 'Elk Report';
     let dataTimeClassW = new Date();
     let TimeWindow = 'Last 7 days'
     let htmlHeader = `
-        < style >
+        <style>
                     @font-face {
         font - family: "DefaultFont";
     }
@@ -133,5 +130,5 @@ let templateHeaderFooter = () => {
 }
 
 export {
-    dashboardStyle, chartHeightWidth, templateHeaderFooter, dataTable
+    dashboardStyle, chartHeightWidth, templateHeaderFooter, verifyDataTable
 }
