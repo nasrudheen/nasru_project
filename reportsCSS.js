@@ -1,5 +1,3 @@
-import { visualParentTag } from './puppeteerEvaluate';
-
 let dashboardStyle = () => {
 
     let removeCSS = `
@@ -17,7 +15,7 @@ let dashboardStyle = () => {
                 }
                 .chrHeaderWrapper ~ .app-wrapper:not(.hidden-chrome) {
                     top: 0px !important;
-                    left: 0px;
+                    left: 0px !important;
                 }
                 .react-grid-layout {
                     width: 100% !important;   
@@ -26,9 +24,25 @@ let dashboardStyle = () => {
                 {
                      display: none;
                 }
-                .table-vis-container .kbnAggTable__paginated {
+                .table-vis-container.kbnAggTable__paginated {
                     position: absolute !important;
                     width: 95%;
+                }
+                .global-nav.is-global-nav-open{
+                    display: none;
+                }
+                kbn-top-nav{
+                    display: none;
+                }
+                .kuiLocalNav{
+                     display: none;
+                }
+                filter-bar{
+                     display: none;
+                }
+                .app-wrapper{
+                     top: 0px !important;
+                    left: 0px !important;
                 }
 
                 `;

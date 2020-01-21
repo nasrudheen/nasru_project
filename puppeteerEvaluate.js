@@ -13,15 +13,21 @@ const adjustChartHeight = async (page, data) => {
          await page.$(tag).then(async (element) => {
             if (element) {
                let css = reportsCSS.chartHeightWidth(visualization_parent_tag[i]);
-               if (data.size = "A4_Pot") {
+               if (data.size == "A4_Pot") {
+
                   let height = (((data.height - 150) / 2) - 0.5) + 'px !important';
                   css['height'] = height;
                }
+               else if (data.size == "A4_Land") {
+                  let height = ((data.height - 150) - 2) + 'px !important';
 
-               await page.addStyleTag({
+                  css['height'] = height;
+               }
+
+               const appyStyle = await page.addStyleTag({
                   content: `${visualization_parent_tag[i]} { ${styles(css)}}`
                })
-               resolve(visualization_parent_tag[i]);
+               resolve(appyStyle);
             }
          })
       })
@@ -49,10 +55,10 @@ const verifyDataTable = async (page) => {
          await page.$(tag).then(async (element) => {
             if (element) {
                let css = reportsCSS.verifyDataTable(dataTableTags[i])
-               await page.addStyleTag({
+               const appyStyle = await page.addStyleTag({
                   content: `${dataTableTags[i]} { ${styles(css)}}`
                })
-               resolve(dataTableTags[i])
+               resolve(appyStyle);
             }
          })
 
@@ -60,7 +66,22 @@ const verifyDataTable = async (page) => {
    })
 }
 
+const defaultLayoutReport = async (page) => {
+   let dashboardParentTag = dashboardTags['Tool_list'][0].dashboard_parent_tag;
+   return new Promise(resolve => {
+      dashboardParentTag.forEach(async (tag, i) => {
+         await page.$(tag).then(async (element) => {
+            if (element) {
+               const defaultLayoutHeight = parseInt(await page.$eval(dashboardParentTag[i], el => el.style.height)) + 150;
+               resolve(defaultLayoutHeight);
+            }
+
+         })
+      })
+   })
+}
+
 
 export {
-   adjustChartHeight, verifyChartTitle, verifyDataTable
+   adjustChartHeight, verifyChartTitle, verifyDataTable, defaultLayoutReport
 }
