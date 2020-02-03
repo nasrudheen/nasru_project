@@ -1,0 +1,109 @@
+{
+   "Tool_list": [
+      {
+         "Tool_name": "kibana",
+         "data_source": "elastic",
+         "dashboard_parent_tag": [
+            ".gridster",
+            ".react-grid-layout"
+         ],
+         "chart_title": [
+            ".panel-title",
+            ".dshPanel__title",
+            ".embPanel__titleText"
+         ],
+         "visualization_parent_tag": [
+            ".gridster > li",
+            ".react-grid-layout > .react-grid-item"
+         ],
+         "data_table_parenttag": [
+            ".visEditor__canvas",
+            ".vis-editor-canvas"
+         ],
+         "visualization_tag": [
+            ".visualize",
+            "visualize"
+         ],
+         "search_tag": "doc-table",
+         "data_table_tag": [
+            ".agg-table-paginated",
+            ".kbnAggTable__paginated",
+            ".kbnDocTable__container"
+         ],
+         "chart_error_tags": [
+            ".visualize-error",
+            ".table-vis-error",
+            ".metrics_issue",
+            ".metrics_error",
+            ".visError",
+            ".kbnDocTable__error"
+         ]
+      },
+      {
+         "Tool_name": "grafana",
+         "data_source": "elastic",
+         "dashboard_parent_tag": ".dash-row",
+         "visualization_parent_tag": [
+            "panel",
+            "react-grid-item"
+         ],
+         "visualization_tag": "plugin-component",
+         "chart_tags": [
+            ".cesiumContainer",
+            ".scadavis-panel .scadavis-panel__chart",
+            "progress-list-plugin-progress",
+            "#Bubble Chart",
+            ".epict-panel",
+            ".markdown-html",
+            ".traffic-light-box",
+            ".status-panel",
+            ".dataTables_scroll",
+            ".boom-table",
+            ".bar-gauge__value",
+            "canvas",
+            "[ng-if='sensor.visible']",
+            ".canvas-spot",
+            ".singlestat-panel span",
+            ".table-panel-container",
+            "panel-plugin-text",
+            ".heatmap-panel svg g",
+            ".graph-canvas-wrapper canvas",
+            "panel-plugin-btplc-alarm-box-panel",
+            ".clock-panel",
+            ".mapcontainer",
+            ".pluginlist",
+            ".dashlist",
+            ".panel-alert-list",
+            ".canvas-spot canvas",
+            ".annotations-panel",
+            ".ajax-panel",
+            ".status-panel",
+            ".cesiumContainer",
+            ".panel-alert-list",
+            ".michaeldmoore-annunciator-panel-container .michaeldmoore-annunciator-panel-value",
+            ".grafana-d3-gauge",
+            ".carpetplot-wrapper",
+            "svg g",
+            ".graph-panel canvas",
+            ".breadcrumb",
+            ".piechart-panel canvas",
+            ".boom-table",
+            "table",
+            ".table-panel-footer",
+            "a table",
+            ".trafficlight-panel",
+            ".chartjs-size-monitor",
+            ".mapboxgl-canvas-container canvas",
+            ".organisation-btns",
+            "[bs-tooltip=\"dot.tooltip\"]",
+            ".status_name_row",
+            ".baron__scroller",
+            ".breadcrumb-container",
+            ".singlestatmath-panel span"
+         ],
+         "chart_error_tags": [
+            ".panel-info-corner--error drop-error drop-target"
+         ]
+      }
+   ]
+}

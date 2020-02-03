@@ -1,0 +1,23 @@
+{
+	"name": "puppeteer1",
+	"version": "1.0.0",
+	"description": "",
+	"main": "puppeteer.js",
+	"dependencies": {
+		"dotenv": "^8.2.0",
+		"puppeteer": "^2.0.0",
+		"puppeteer-core": "^2.0.0"
+	},
+	"devDependencies": {
+		"@babel/core": "^7.7.7",
+		"@babel/node": "^7.7.7",
+		"@babel/preset-env": "^7.7.7",
+		"nodemon": "^2.0.2"
+	},
+	"scripts": {
+		"start": "nodemon --exec babel-node ./puppeteer.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "",
+	"license": "ISC"
+}
