@@ -2,13 +2,13 @@ import puppeteer from 'puppeteer';
 import dotenv from 'dotenv';
 import * as reportsCSS from "./reportsCSS";
 import fs from 'fs';
-import { adjustChartHeight, verifyChartTitle, verifyDataTable, defaultLayoutReport } from './puppeteerEvaluate';
+import { adjustChartHeight, verifyChartTitle, verifyDataTable, defaultLayoutReport, verifyCloudVisual } from './puppeteerEvaluate';
 
 var pupBrowser = async () => {
     const browser = await puppeteer.launch({
         // executablePath: './headless_shell/headless_shell',
         executablePath: '/usr/bin/google-chrome',
-        headless: false,
+        headless: true,
     });
     dotenv.config({ path: `${__dirname}/.env` });
     const url = process.env.URL;
@@ -19,11 +19,7 @@ var pupBrowser = async () => {
     let template = "NoTemplate";
 
     var page = await browser.newPage();
-    await page.setViewport({
-        width: 842,
-        height: 595,
-        deviceScaleFactor: 1,
-    });
+
     function millisToSeconds(millis) {
         var seconds = ((millis) / 1000).toFixed(0);
         return (seconds < 10 ? '0' : '') + seconds;
@@ -42,33 +38,43 @@ var pupBrowser = async () => {
     }).then(async () => {
 
         let data = {
-            height: 595,
-            width: 842,
-            size: "A4_Land"
+            width: 595,
+            height: 842,
+            size: "A4_Pot"
         }
-
-        /////////////////// Common Css to remove Kibana Body /////////////////
 
         let removeCSS = reportsCSS.dashboardStyle();
         await page.addStyleTag({
             content: `${removeCSS}`
         })
+        await verifyChartTitle(page)
 
-        ///////////////////////// Css Applied ////////////////////////////
+        await verifyDataTable(page)
 
-        await verifyChartTitle(page).then(() => {
-            console.log('Chart tile present')
-        })
+        await verifyCloudVisual(page)
+
+        await page.setViewport({
+            width: 595,
+            height: 842,
+            deviceScaleFactor: 1,
+        });
 
         if (format == "pdf" && template == "NoTemplate" && layout == "SmartLayout") {
             await adjustChartHeight(page, data);
-            //await verifyDataTable(page)
-
         }
         if (format == "pdf" && template == "NoTemplate" && layout == "DefaultLayout") {
             var defaultLayoutHeight = await defaultLayoutReport(page)
         }
-
+        await page.evaluate(() => {
+            return document.body.innerHTML;
+        }).then(async (dimensions) => {
+            fs.writeFile('debuglog.html', dimensions, function (err) {
+                if (err) {
+                    console.log(err);
+                }
+                console.log('The file was saved in the path ');
+            });
+        })
         //  console.log('evaluated completed at ', millisToSeconds(new Date().getTime() - startTime) + 'sec.');
 
 
@@ -103,8 +109,8 @@ var pupBrowser = async () => {
             setTimeout(async () => {
                 await page.pdf({
                     path: 'test' + new Date() + '.pdf',
-                    width: 842,
-                    height: 595,
+                    width: 595,
+                    height: 842,
                     footerTemplate: htmlFooter,
                     headerTemplate: htmlHeader,
                     displayHeaderFooter: true,

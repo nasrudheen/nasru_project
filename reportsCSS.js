@@ -2,64 +2,77 @@ let dashboardStyle = () => {
 
     let removeCSS = `
                 .euiHeader {
-                    display: none;
+                    display: none !important;
                 }
                 .euiFlexGroup.euiFlexGroup--directionRow.kbnTopNavMenu {
                     display: none;
                 }
                 .globalQueryBar {
-                    display: none;
+                    display: none !important;
                 }
-                nav.euiNavDrawer.euiNavDrawer-isCollapsed.euiNavDrawer-flyoutIsCollapsed {
-                    display: none;
-                }
-                .chrHeaderWrapper ~ .app-wrapper:not(.hidden-chrome) {
-                    top: 0px !important;
-                    left: 0px !important;
+                nav {
+	                display: none !important;
                 }
                 .react-grid-layout {
                     width: 100% !important;   
                 }
                 .euiScreenReaderOnly
                 {
-                     display: none;
-                }
-                .table-vis-container.kbnAggTable__paginated {
-                    position: absolute !important;
-                    width: 95%;
-                }
-                .global-nav.is-global-nav-open{
-                    display: none;
+                     display: none !important;
                 }
                 kbn-top-nav{
-                    display: none;
+                    display: none !important;
                 }
                 .kuiLocalNav{
-                     display: none;
+                     display: none !important;
                 }
                 filter-bar{
-                     display: none;
+                     display: none !important;
                 }
+              .start-screen{
+                    display: none !important;
+               }
+               .text-center.start-screen.ng-hide h2{
+                   display:none !important;
+               }
+              .text-center h2{
+                   display:none !important;
+               }
+
+              .text-center{
+                   display:none !important;
+               }
+
+                #globalBannerList {
+	                display: none;
+                }
+               
                 .app-wrapper{
-                     top: 0px !important;
+	                top: 0px !important;
                     left: 0px !important;
                 }
+
 
                 `;
     return removeCSS;
 }
 
-let verifyDataTable = () => {
+let dataTableStyle = () => {
     return {
         position: 'absolute !important',
         width: '95% !important'
     };
 }
-
+let cloudVisualStyle = () => {
+    return {
+        position: 'absolute !important'
+    };
+}
 let chartHeightWidth = () => {
     return {
         position: 'static !important',
         width: '100% !important',
+        border: '1px solid #cccccc !important',
         overflow: 'hidden !important',
         padding: '0px 10px'
     };
@@ -144,5 +157,5 @@ let templateHeaderFooter = () => {
 }
 
 export {
-    dashboardStyle, chartHeightWidth, templateHeaderFooter, verifyDataTable
+    dashboardStyle, chartHeightWidth, templateHeaderFooter, dataTableStyle, cloudVisualStyle
 }

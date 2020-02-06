@@ -36,7 +36,9 @@ const adjustChartHeight = async (page, data) => {
 
 const verifyChartTitle = async (page) => {
    let chartTitleTags = dashboardTags['Tool_list'][0].chart_title;
+
    return new Promise(resolve => {
+
       chartTitleTags.forEach(async (tag, i) => {
          await page.$(tag).then(async (element) => {
             if (element) {
@@ -51,19 +53,48 @@ const verifyChartTitle = async (page) => {
 const verifyDataTable = async (page) => {
    let dataTableTags = dashboardTags['Tool_list'][0].data_table_tag;
    return new Promise(resolve => {
+      let flag = false;
       dataTableTags.forEach(async (tag, i) => {
          await page.$(tag).then(async (element) => {
             if (element) {
-               let css = reportsCSS.verifyDataTable(dataTableTags[i])
+               flag = true;
+               let css = reportsCSS.dataTableStyle(dataTableTags[i])
+               console.log(dataTableTags[i])
                const appyStyle = await page.addStyleTag({
                   content: `${dataTableTags[i]} { ${styles(css)}}`
                })
                resolve(appyStyle);
             }
+            else if (!flag && i >= dataTableTags.length - 1) {
+               resolve();
+            }
          })
-
       })
    })
+}
+
+const verifyCloudVisual = async (page) => {
+   let cloudTags = dashboardTags['Tool_list'][0].cloud_visual_tag;
+   return new Promise(resolve => {
+      let flag = false;
+      cloudTags.forEach(async (tag, i) => {
+         await page.$(tag).then(async (element) => {
+            if (element) {
+               flag = true;
+               let css = reportsCSS.cloudVisualStyle(cloudTags[i])
+               console.log(cloudTags[i])
+               const appyStyle = await page.addStyleTag({
+                  content: `${cloudTags[i]} { ${styles(css)}}`
+               })
+               resolve(appyStyle);
+            }
+            else if (!flag && i >= cloudTags.length - 1) {
+               resolve();
+            }
+         })
+      })
+   })
+
 }
 
 const defaultLayoutReport = async (page) => {
@@ -83,5 +114,5 @@ const defaultLayoutReport = async (page) => {
 
 
 export {
-   adjustChartHeight, verifyChartTitle, verifyDataTable, defaultLayoutReport
+   adjustChartHeight, verifyChartTitle, verifyDataTable, defaultLayoutReport, verifyCloudVisual
 }
