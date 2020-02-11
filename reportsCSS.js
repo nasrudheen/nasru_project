@@ -1,4 +1,4 @@
-let dashboardStyle = () => {
+let kibanaCSS = () => {
 
     let removeCSS = `
                 .euiHeader {
@@ -44,7 +44,7 @@ let dashboardStyle = () => {
                }
 
                 #globalBannerList {
-	                display: none;
+	                display: none !important;
                 }
                
                 .app-wrapper{
@@ -56,6 +56,28 @@ let dashboardStyle = () => {
                 `;
     return removeCSS;
 }
+
+let grafanaCSS = () => {
+
+    let removeCSS = `
+               sidemenu{
+                    display: none !important;
+               }
+              .navbar{
+                   display: none !important;
+              }
+              .dashboard-container{
+                    padding-left: 0px;
+                    padding-top: 0px;
+                    padding-right: 0px
+              }
+                `;
+    return removeCSS;
+}
+
+
+
+
 
 let dataTableStyle = () => {
     return {
@@ -157,5 +179,5 @@ let templateHeaderFooter = () => {
 }
 
 export {
-    dashboardStyle, chartHeightWidth, templateHeaderFooter, dataTableStyle, cloudVisualStyle
+    kibanaCSS, grafanaCSS, chartHeightWidth, templateHeaderFooter, dataTableStyle, cloudVisualStyle
 }

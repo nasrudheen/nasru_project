@@ -8,12 +8,13 @@ var pupBrowser = async () => {
     const browser = await puppeteer.launch({
         // executablePath: './headless_shell/headless_shell',
         executablePath: '/usr/bin/google-chrome',
-        headless: true,
+        headless: false,
     });
     dotenv.config({ path: `${__dirname}/.env` });
     const url = process.env.URL;
     console.log('url started loading................');
 
+    let dataSource = "grafana";
     let format = "pdf";
     let layout = "SmartLayout";
     let template = "NoTemplate";
@@ -42,16 +43,40 @@ var pupBrowser = async () => {
             height: 842,
             size: "A4_Pot"
         }
+        if (dataSource == "kibana") {
 
-        let removeCSS = reportsCSS.dashboardStyle();
-        await page.addStyleTag({
-            content: `${removeCSS}`
-        })
-        await verifyChartTitle(page)
+            let removeCSS = reportsCSS.kibanaCSS();
+            await page.addStyleTag({
+                content: `${removeCSS}`
+            })
+            await verifyChartTitle(page)
 
-        await verifyDataTable(page)
+            await verifyDataTable(page)
 
-        await verifyCloudVisual(page)
+            await verifyCloudVisual(page)
+        }
+        else if (dataSource == "grafana") {
+            await page.type("[name='user']", "admin")
+            await page.type("[name='password']", "admin")
+            // await page.click("#login-view .login-form-group [type = 'submit']").then(async () => {
+            // await page.waitForSelector('.page-alert-list')
+            // if (await page.$('.btn.btn-link') !== null) {
+            //     await page.click('.btn.btn-link');
+            // }
+            //await page.reload([{ waitUntil: 'networkidle0' }])
+            //  })
+
+
+
+
+
+            let removeGrafanaCSS = reportsCSS.grafanaCSS();
+
+            await page.addStyleTag({
+                content: `${removeGrafanaCSS}`
+            })
+        }
+
 
         await page.setViewport({
             width: 595,
@@ -59,10 +84,14 @@ var pupBrowser = async () => {
             deviceScaleFactor: 1,
         });
 
-        if (format == "pdf" && template == "NoTemplate" && layout == "SmartLayout") {
+        if (dataSource == "kibana" && format == "pdf" && template == "NoTemplate" && layout == "SmartLayout") {
             await adjustChartHeight(page, data);
         }
-        if (format == "pdf" && template == "NoTemplate" && layout == "DefaultLayout") {
+        else if (dataSource == "grafana" && format == "pdf" && template == "NoTemplate" && layout == "SmartLayout") {
+
+        }
+
+        if (dataSource == "kibana" && format == "pdf" && template == "NoTemplate" && layout == "DefaultLayout") {
             var defaultLayoutHeight = await defaultLayoutReport(page)
         }
         await page.evaluate(() => {
